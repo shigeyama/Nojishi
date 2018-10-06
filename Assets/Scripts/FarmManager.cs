@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FarmManager : SingletonMonoBehaviour<FarmManager>
 {
-    [SerializeField]
+    [SerializeField, Header("シーン上の畑を持ってくる")]
     GameObject[] groundTypeObject;
 
     public int[] typeNumber;

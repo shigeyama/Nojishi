@@ -113,7 +113,7 @@ public class DATA : MonoBehaviour
     public void RopeTrap()
     {
         Debug.Log("RopeTrap");
-        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 7;
+        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 8;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(ropeTrapPre, playerSystem.SelectGround.transform.position, Quaternion.identity);
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
@@ -123,7 +123,7 @@ public class DATA : MonoBehaviour
     public void TorabasamiTrap()
     {
         Debug.Log("TorabasamiTrap");
-        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 8;
+        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 9;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 3;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(torabasamiTrapPre, playerSystem.SelectGround.transform.position, Quaternion.identity);
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
@@ -133,7 +133,7 @@ public class DATA : MonoBehaviour
     public void DensakuTrap()
     {
         Debug.Log("DensakuTrap");
-        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 9;
+        playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 10;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 5;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(densakuTrapPre, playerSystem.SelectGround.transform.position, Quaternion.identity);
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
