@@ -13,6 +13,8 @@ public class PlayerSystem : MonoBehaviour
     GameObject trapButton;
     GameObject farmButton;
 
+    GameObject selectGround;
+
     DATA data;
 
     // Use this for initialization
@@ -39,14 +41,16 @@ public class PlayerSystem : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<GroundType>() != null)
             {
-                Destroy(trapButton);
-                Destroy(farmButton);
-                ButtonGeneration(hit.collider.gameObject.GetComponent<GroundType>(), hit.collider.transform.position);
+                DestroyButton();
+                if (!hit.collider.gameObject.GetComponent<GroundType>().IsItem)
+                {
+                    ButtonGeneration(hit.collider.gameObject.GetComponent<GroundType>(), hit.collider.transform.position);
+                    selectGround = hit.collider.gameObject;
+                }
             }
             else if (hit.collider.gameObject.tag != "Button")
             {
-                Destroy(trapButton);
-                Destroy(farmButton);
+                DestroyButton();
             }
         }
     }
@@ -55,10 +59,10 @@ public class PlayerSystem : MonoBehaviour
     {
         if (type.IsTrap)
         {
-            trapButton = Instantiate(trapButtonPrefab, generationPos + new Vector3(0, 6, 0), Quaternion.Euler(80, 0, 0));
+            trapButton = Instantiate(trapButtonPrefab, generationPos + new Vector3(0, 13, 0), Quaternion.Euler(80, 0, 0));
             trapButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(data.FeedTrap);
             trapButton.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(data.LightTrap);
-            trapButton.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(data.RoopTrap);
+            trapButton.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(data.RopeTrap);
             trapButton.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(data.TorabasamiTrap);
             trapButton.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(data.DensakuTrap);
         }
@@ -66,18 +70,29 @@ public class PlayerSystem : MonoBehaviour
         {
             if (type.IsTrap)
             {
-                farmButton = Instantiate(farmButtonPrefab, generationPos + new Vector3(36, 6, 0), Quaternion.Euler(80, 0, 0));
+                farmButton = Instantiate(farmButtonPrefab, generationPos + new Vector3(36, 13, 0), Quaternion.Euler(80, 0, 0));
             }
             else
             {
-                farmButton = Instantiate(farmButtonPrefab, generationPos + new Vector3(0, 6, 0), Quaternion.Euler(80, 0, 0));
+                farmButton = Instantiate(farmButtonPrefab, generationPos + new Vector3(0, 13, 0), Quaternion.Euler(80, 0, 0));
             }
             farmButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(data.Carrot);
             farmButton.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(data.Eggplant);
             farmButton.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(data.Tomato);
             farmButton.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(data.Corn);
-            farmButton.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(data.Pumpkin);
+            farmButton.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(data.Pampkin);
         }
+    }
+
+    public GameObject SelectGround
+    {
+        get { return selectGround; }
+    }
+
+    public void DestroyButton()
+    {
+        Destroy(trapButton);
+        Destroy(farmButton);
     }
     
 }

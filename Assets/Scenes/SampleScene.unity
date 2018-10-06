@@ -222,6 +222,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSystem: {fileID: 1904031617}
+  carrotPre: {fileID: 1100079160644186, guid: b70515b7172d88b4bbc8346721d97a5c, type: 2}
+  eggplantPre: {fileID: 1701574159885722, guid: 54a1b9441de2cd946aa7a963e23bbe22,
+    type: 2}
+  tomatoPre: {fileID: 1065822179536444, guid: 235307f9c760de340935ae9442d37e18, type: 2}
+  cornPre: {fileID: 1111254507809192, guid: ca0fc3938f009664880970ee09618c1c, type: 2}
+  pampkinPre: {fileID: 1480527010619114, guid: 5be482c19ff7d0f42a6cc69067930f26, type: 2}
+  feedTrapPre: {fileID: 1239798265715178, guid: af3fd3c178d165349b7bdfc33ea039f4,
+    type: 2}
+  lightTrapPre: {fileID: 1429742466898650, guid: 69cfd0ecbe37ee646b037854514e4abc,
+    type: 2}
+  ropeTrapPre: {fileID: 1998972309797198, guid: 7062242850b3fb841ba9a62ce8bcd553,
+    type: 2}
+  torabasamiTrapPre: {fileID: 1390335757112150, guid: 60ced204783477948b7c670f3dc73ce5,
+    type: 2}
+  densakuTrapPre: {fileID: 1821335530028542, guid: c93cf49ea4c26724eae381c8bcde11de,
+    type: 2}
 --- !u!4 &56034597
 Transform:
   m_ObjectHideFlags: 0
@@ -653,7 +669,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 0, y: 65, z: -10}
+  m_LocalPosition: {x: 0, y: 65, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1653,6 +1669,46 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4834150966426616, guid: bb7be666040b4194ca1d1bdb9cffdc85,
     type: 2}
   m_PrefabInternal: {fileID: 1414573785}
+--- !u!1 &1592469868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592469870}
+  - component: {fileID: 1592469869}
+  m_Layer: 0
+  m_Name: FarmManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1592469869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1592469868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54a4770f2d05774f80e38137b3e730f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1592469870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1592469868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1640854201
 Prefab:
   m_ObjectHideFlags: 0
