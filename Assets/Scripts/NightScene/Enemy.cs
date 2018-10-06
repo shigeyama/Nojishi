@@ -17,7 +17,9 @@ public class Enemy : MonoBehaviour {
     float DestroySpeed=1f;
 
     float destroyTime=1000; // いきなり消えないように大きい値
-
+    float destroyTimeBak;
+    bool UTurn;
+    int sakumotuID;   // あたった作物・トラップ番号
     void Awake()
     {
 
@@ -28,21 +30,39 @@ public class Enemy : MonoBehaviour {
 	}
 
     // 開始位置から対象マスまでの距離 １スタート
-    public void SetParam(int Distance)
+    public void SetParam(int Distance, int Sakumotu,bool newUTurn=false)
     {
         destroyTime = DestroySpeed * Distance;
+        UTurn = newUTurn;
+        destroyTimeBak = destroyTime;
+        sakumotuID = Sakumotu;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.Translate(this.transform.up * DestroySpeed);
+        Vector3 pos = gameObject.transform.position;
+        pos += gameObject.transform.forward.normalized * MoveSpeed * Time.deltaTime;
+        gameObject.transform.position = pos;
+
         destroyTime -= Time.deltaTime;
 
         // 時間がきたので削除
         if (destroyTime < 0)
         {
-            DestroyObject(gameObject);
-            // 移動先のものが削除であればここで行う
+            if (UTurn)
+            {
+                // 帰りがある場合はここで反転させる
+                destroyTime = destroyTimeBak;
+                transform.Rotate(new Vector3(0, 1, 0), 180);
+                UTurn = false;
+                // ここで作物を削除してスコアを加算
+            }
+            else
+            {
+                DestroyObject(gameObject);
+                // ここでトラップにダメージ処理
+
+            }
         }
 //		destroyTime
 

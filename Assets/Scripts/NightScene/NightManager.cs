@@ -3,7 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class NightManager : MonoBehaviour {
-    
+    public enum Doubutu
+    {
+        Inoshishi = 0,
+        Cnt
+    };
+    public enum Sakumotu
+    {
+        Ninjin = 0,
+        Cnt
+    };
 
     // 夜朝シーンかどうか
     public enum NightStatus
@@ -17,19 +26,13 @@ public class NightManager : MonoBehaviour {
     // 夜朝シーンが存在するかどうか
     bool ExistScene;
 
+    
+    // 引き継ぎデータ
+    int Day;
+    public int getDay() { return Day; }
     // 討伐数収穫数
     public class Score
     {
-        public enum Doubutu
-        {
-            Inoshishi=0,
-            Cnt
-        };
-        public enum Sakumotu
-        {
-            Ninjin=0,
-            Cnt
-        };
         public int[] Dbt  = new int[(int)Doubutu.Cnt];
         public int[] OKSaku = new int[(int)Sakumotu.Cnt];
         public int[] NGSaku = new int[(int)Sakumotu.Cnt];
@@ -142,6 +145,6 @@ public class NightManager : MonoBehaviour {
 
     public void Start()
     {
-        StartNightScene();
+//        StartNightScene();
     }
 }
