@@ -20,4 +20,9 @@ public class GroundType : MonoBehaviour
     {
         get { return isTrap; }
     }
+
+    public void TrapDamage(int damage)
+    {
+
+    }
 }
