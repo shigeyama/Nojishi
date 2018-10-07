@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 9f0ccff85d9bb484197d8e068715d217
+guid: 8501271f681e1244ba13d143b081de05
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: TrabasamiTrap
+    100000: RightTrap
     100002: //RootNode
-    400000: TrabasamiTrap
+    400000: RightTrap
     400002: //RootNode
-    2100000: TrabasamiTrapMat
-    2300000: TrabasamiTrap
-    3300000: TrabasamiTrap
-    4300000: TrabasamiTrap
+    2100000: RightTrapMat
+    2300000: RightTrap
+    3300000: RightTrap
+    4300000: RightTrap
   externalObjects: {}
   materials:
     importMaterials: 1
