@@ -18,7 +18,23 @@ public class GroundType : MonoBehaviour
 
     int dayCount;
 
+    int growthDay;
+
     int hp;
+
+    int myNumber;
+
+    void Start()
+    {
+        for (int i = 0; i < transform.root.childCount; i++)
+        {
+            if (transform.root.GetChild(i).gameObject == gameObject)
+            {
+                myNumber = i;
+                break;
+            }
+        }
+    }
 
     public bool IsFarm
     {
@@ -37,7 +53,13 @@ public class GroundType : MonoBehaviour
         {
             Destroy(item);
             isItem = false;
+            GroundTypeNum = 0;
         }
+    }
+
+    void DayCounter()
+    {
+        dayCount++;
     }
 
     public bool IsItem
@@ -52,14 +74,16 @@ public class GroundType : MonoBehaviour
         set { groundTypeNum = value; }
     }
 
-    void DayCounter()
+    public int GrowthDay
     {
-        dayCount++;
+        get { return growthDay; }
+        set { growthDay = value; }
     }
 
     public int DayCount
     {
         get { return dayCount; }
+        set { dayCount = value; }
     }
 
     public int Hp
@@ -70,5 +94,10 @@ public class GroundType : MonoBehaviour
     public GameObject Item
     {
         set { item = value; }
+    }
+
+    public int MyNumber
+    {
+        get { return myNumber; }
     }
 }
