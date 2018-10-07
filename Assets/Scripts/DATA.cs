@@ -65,7 +65,7 @@ public class DATA : MonoBehaviour
 
         Debug.Log("Carrot");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 1;
-        playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
+        playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
         playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 1;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(carrotPre, playerSystem.SelectGround.transform.position + new Vector3(0, 3, 0), Quaternion.Euler(0, 90, 25));
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
@@ -104,7 +104,7 @@ public class DATA : MonoBehaviour
         Debug.Log("Tomato");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 3;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
-        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 1;
+        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 2;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(tomatoPre, playerSystem.SelectGround.transform.position + new Vector3(-2.5f, 3, 0), Quaternion.Euler(0, 90, 25));
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
         playerSystem.SelectGround.GetComponent<GroundType>().DayCount = 0;
@@ -122,8 +122,8 @@ public class DATA : MonoBehaviour
         playerSystem.UsePower(1);
         Debug.Log("Corn");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 4;
-        playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
-        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 1;
+        playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
+        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 3;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(cornPre, playerSystem.SelectGround.transform.position + new Vector3(-1f, 0, 0), Quaternion.Euler(0, 90, 25));
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
         playerSystem.SelectGround.GetComponent<GroundType>().DayCount = 0;
@@ -142,7 +142,7 @@ public class DATA : MonoBehaviour
         Debug.Log("Pumpkin");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 5;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
-        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 1;
+        playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 3;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(pampkinPre, playerSystem.SelectGround.transform.position, Quaternion.identity);
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
         playerSystem.SelectGround.GetComponent<GroundType>().DayCount = 0;
