@@ -50,6 +50,8 @@ public class FarmManager : SingletonMonoBehaviour<FarmManager>
                 groundTypeObject[i].GetComponent<GroundType>().DayCounter();
             }
             playerSystem.PowerReset();
+            dayCheck = true;
+            NightManager.instance.DeleteNightScene();
         }
     }
 }

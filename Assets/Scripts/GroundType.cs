@@ -56,13 +56,12 @@ public class GroundType : MonoBehaviour
 
     public void AnimalDamage(int damage)
     {
-        hp--;
+        hp -= damage;
         if (hp <= 0)
         {
             Destroy(item);
             isItem = false;
             GroundTypeNum = 0;
-            farmManager.typeNumber[myNumber] = 0;
         }
     }
 
@@ -77,19 +76,19 @@ public class GroundType : MonoBehaviour
                 switch (groundTypeNum)
                 {
                     case 1:
-                        data.GrewCarrot();
+                        data.GrewCarrot(gameObject);
                         break;
                     case 2:
-                        data.GrewEggplant();
+                        data.GrewEggplant(gameObject);
                         break;
                     case 3:
-                        data.GrewTomato();
+                        data.GrewTomato(gameObject);
                         break;
                     case 4:
-                        data.GrewCorn();
+                        data.GrewCorn(gameObject);
                         break;
                     case 5:
-                        data.GrewPampkin();
+                        data.GrewPampkin(gameObject);
                         break;
                 }
             }

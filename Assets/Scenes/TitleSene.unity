@@ -248,6 +248,11 @@ MonoBehaviour:
     type: 2}
   densakuTrapPre: {fileID: 1821335530028542, guid: c93cf49ea4c26724eae381c8bcde11de,
     type: 2}
+  grewCarrotPre: {fileID: 0}
+  grewEggplantPre: {fileID: 0}
+  grewTomatoPre: {fileID: 0}
+  grewCornPre: {fileID: 0}
+  grewPampkinPre: {fileID: 0}
 --- !u!4 &56034597
 Transform:
   m_ObjectHideFlags: 0
@@ -3496,6 +3501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c54a4770f2d05774f80e38137b3e730f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSystem: {fileID: 0}
   groundTypeObject:
   - {fileID: 1440529937}
   - {fileID: 1671403660}
@@ -4026,6 +4032,7 @@ MonoBehaviour:
     type: 2}
   farmButtonPrefab: {fileID: 1208522065205478, guid: 17c7f90b0d7563d4d9b9cde825a67898,
     type: 2}
+  slider: {fileID: 0}
 --- !u!4 &1904031618
 Transform:
   m_ObjectHideFlags: 0

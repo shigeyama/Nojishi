@@ -301,7 +301,7 @@ public class NightScene : MonoBehaviour{
             {
                 //最終表示したのでタイトルに戻る
                 NightManager.instance.FirstInit();
-                 UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleScene");
+                 UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleSene");
             }
             else
             {
@@ -342,7 +342,7 @@ public class NightScene : MonoBehaviour{
                 // 作物ごとの収穫日数を耐えていれば収穫
                 if (FarmManager.Instance.dayCounts[Lp] >= FarmManager.Instance.growthDays[Lp])///]HarvestDays[FarmManager.Instance.typeNumber[Lp]])
                 {
-                    FarmManager.Instance.Damage(Lp, 1);
+                    FarmManager.Instance.Damage(Lp, 10);
                     NightManager.instance.OneScore.AddOKSaku((NightManager.Sakumotu)FarmManager.Instance.typeNumber[Lp]);
                 }
             }

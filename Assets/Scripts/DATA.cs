@@ -338,28 +338,28 @@ public class DATA : MonoBehaviour
         playerSystem.DestroyButton();
     }
 
-    public void GrewCarrot()
+    public void GrewCarrot(GameObject groundObj)
     {
-        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewCarrotPre, playerSystem.SelectGround.transform.position + new Vector3(0, 3, 0), Quaternion.Euler(0, 90, 25));
+        groundObj.GetComponent<GroundType>().Item = Instantiate(grewCarrotPre, groundObj.transform.position + new Vector3(0, 3, 0), Quaternion.Euler(0, 90, 25));
     }
 
-    public void GrewEggplant()
+    public void GrewEggplant(GameObject groundObj)
     {
-        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewEggplantPre, playerSystem.SelectGround.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
+        groundObj.GetComponent<GroundType>().Item = Instantiate(grewEggplantPre, groundObj.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
     }
 
-    public void GrewTomato()
+    public void GrewTomato(GameObject groundObj)
     {
-        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewTomatoPre, playerSystem.SelectGround.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
+        groundObj.GetComponent<GroundType>().Item = Instantiate(grewTomatoPre, groundObj.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
     }
 
-    public void GrewCorn()
+    public void GrewCorn(GameObject groundObj)
     {
-        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewCornPre, playerSystem.SelectGround.transform.position + new Vector3(-1, 0, 0), Quaternion.Euler(0, 90, 25));
+        groundObj.GetComponent<GroundType>().Item = Instantiate(grewCornPre, groundObj.transform.position + new Vector3(-1, 0, 0), Quaternion.Euler(0, 90, 25));
     }
 
-    public void GrewPampkin()
+    public void GrewPampkin(GameObject groundObj)
     {
-        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewPampkinPre, playerSystem.SelectGround.transform.position + new Vector3(0, 0, 0), Quaternion.Euler(30, 0, 0));
+        groundObj.GetComponent<GroundType>().Item = Instantiate(grewPampkinPre, groundObj.transform.position + new Vector3(0, 0, 0), Quaternion.Euler(30, 0, 0));
     }
 }
