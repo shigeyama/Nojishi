@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour {
     int sakumotuID;   // あたった作物・トラップ番号
     int TargetID;     // 相手の配列番号    シングルトンでコールバックする用
     int EnemyID;        // 敵種類
+    bool RunAway=false;   // ついたけどなにもなかったときにたつフラグ
     void Awake()
     {
 
@@ -55,7 +56,19 @@ public class Enemy : MonoBehaviour {
         // 時間がきたので削除
         if (destroyTime < 0)
         {
-            if (UTurn)
+            if (FarmManager.Instance.typeNumber[TargetID]== 0)
+            {
+                UTurn = false;
+                RunAway = true;
+                destroyTime = 5;    // ここから５秒駆け抜けて消す
+                return;
+            }
+            if (RunAway)
+            {
+                // 駆け抜けて消える
+                DestroyObject(gameObject);
+            }
+            else if (UTurn)
             {
                 // 帰りがある場合はここで反転させる
                 destroyTime = destroyTimeBak;
@@ -64,6 +77,7 @@ public class Enemy : MonoBehaviour {
                 // ここで作物を削除してスコアを加算
                 FarmManager.Instance.Damage(TargetID,1);
                 NightManager.instance.OneScore.AddNGSaku((NightManager.Sakumotu)sakumotuID);
+                FarmManager.Instance.SetNumber();
             }
             else
             {
@@ -73,6 +87,7 @@ public class Enemy : MonoBehaviour {
                 // ここでトラップにダメージ処理
                 FarmManager.Instance.Damage(TargetID, Attack);
                 NightManager.instance.OneScore.AddDoubutu((NightManager.Doubutu)EnemyID);
+                FarmManager.Instance.SetNumber();
             }
         }
 //		destroyTime
