@@ -623,8 +623,8 @@ MonoBehaviour:
   - {fileID: 1285410529}
   - {fileID: 1752781136}
   - {fileID: 1324859667}
-  ScoreCanvas: {fileID: 0}
-  NightMode: 0
+  ScoreCanvas: {fileID: 2011916658}
+  NightMode: 1
   EndWait: 0
   DayTime_base: 30
 --- !u!4 &1191840320

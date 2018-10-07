@@ -126,8 +126,8 @@ public class NightManager : MonoBehaviour {
         }
     }
 
-    public Score TotalScore;   // 合計スコア
-    public Score OneScore;     // １日スコア
+    public Score TotalScore=new Score();   // 合計スコア
+    public Score OneScore = new Score();     // １日スコア
     // メインシーンのライトとカメラ  これだけちょっと交換したいのでほしいです
     [SerializeField]
     Light MainLight;
