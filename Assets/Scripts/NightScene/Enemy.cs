@@ -15,11 +15,15 @@ public class Enemy : MonoBehaviour {
     float MoveSpeed=1f;
     [SerializeField]
     float DestroySpeed=1f;
+    [SerializeField]
+    int Attack = 1;
 
     float destroyTime=1000; // いきなり消えないように大きい値
     float destroyTimeBak;
     bool UTurn;
     int sakumotuID;   // あたった作物・トラップ番号
+    int TargetID;     // 相手の配列番号    シングルトンでコールバックする用
+    int EnemyID;        // 敵種類
     void Awake()
     {
 
@@ -30,12 +34,14 @@ public class Enemy : MonoBehaviour {
 	}
 
     // 開始位置から対象マスまでの距離 １スタート
-    public void SetParam(int Distance, int Sakumotu,bool newUTurn=false)
+    public void SetParam(int Distance, int Sakumotu,int TargetIndex,int DoubutuKind,bool newUTurn=false)
     {
         destroyTime = DestroySpeed * Distance;
         UTurn = newUTurn;
         destroyTimeBak = destroyTime;
         sakumotuID = Sakumotu;
+        TargetID = TargetIndex;
+        EnemyID = DoubutuKind;
     }
 	
 	// Update is called once per frame
@@ -56,12 +62,17 @@ public class Enemy : MonoBehaviour {
                 transform.Rotate(new Vector3(0, 1, 0), 180);
                 UTurn = false;
                 // ここで作物を削除してスコアを加算
+                FarmManager.Instance.Damage(TargetID,1);
+                NightManager.instance.OneScore.AddNGSaku((NightManager.Sakumotu)sakumotuID);
             }
             else
             {
+                // トラップにあたったので消える
                 DestroyObject(gameObject);
-                // ここでトラップにダメージ処理
 
+                // ここでトラップにダメージ処理
+                FarmManager.Instance.Damage(TargetID, Attack);
+                NightManager.instance.OneScore.AddDoubutu((NightManager.Doubutu)EnemyID);
             }
         }
 //		destroyTime

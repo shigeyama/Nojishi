@@ -20,6 +20,8 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
 
     [SerializeField]
     Text[] ScoreTextArray;
+    [SerializeField]
+    GameObject ScoreCanvas;
     
   public   bool NightMode; // 夜ならtrue 朝ならfalse
   public bool EndWait;
@@ -30,29 +32,38 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
    
   float DayTime;            // この日の残り秒数
 
+  bool LastDay = false;
 
 
-// 日別の出現テーブル    データのデリミタに99999タイマー
+// 日別の出現テーブル 30秒    データのデリミタに99999タイマー
   int InitPtr;
   int[,] enemyInitArray_Time =
   {
-      {10,20,99999},
-      {10,20,99999},
-      {10,20,99999},
-      {10,20,99999},
-      {10,20,99999},
-      {10,20,99999},
-      {10,20,99999},
+	//１日あたりの登場量を考える	１日目１５、２日目５　３日目７　４日目３　５日目２０	６日目１０　７日目１０
+      { 1, 2, 5, 6, 7,10,15,20,25,27,99999,0,0,0,0,0,0,0,0,0,0},    //10
+      { 4, 6, 7,10,20,99999,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0,0},    //5
+      {10,15,16,17,20,22,24,99999,0,0,0 ,0,0,0,0,0,0,0,0,0,0},    //7
+      {5,10,15,99999,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0,0} ,  //3
+      { 1, 4,10,11,12,13,14,15,16,17,   18,19,20,21,22,23,24,25,26,27,99999},   //20
+      { 2, 4, 6, 8,10,16,18,20,22,24,99999 ,0,0,0,0,0,0,0,0,0,0},    //10
+      {16,17,18,19,20,21,22,23,24,25,99999 ,0,0,0,0,0,0,0,0,0,0},    //10
   };
-  NightManager.Doubutu[,] enemyInitArray_Doubutu =
-  {
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
-      {NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi,NightManager.Doubutu.Inoshishi},
+  NightManager.Doubutu[,] enemyInitArray_Doubutu =  // ステージ５以外は２行目ダミーです
+  {// 0                          1                         2                         3                         4                         5                         6                         7                         8                         9
+      {NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Bear,NightManager.Doubutu.Boar,NightManager.Doubutu.Bear,NightManager.Doubutu.Boar,NightManager.Doubutu.Bear,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Boar,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Wolf,NightManager.Doubutu.Boar,NightManager.Doubutu.Fox ,NightManager.Doubutu.Fox ,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Wolf,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Squirrel,NightManager.Doubutu.Squirrel,NightManager.Doubutu.Squirrel,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Squirrel,NightManager.Doubutu.Squirrel,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,NightManager.Doubutu.Boar,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
+      {NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Wolf,NightManager.Doubutu.Boar,NightManager.Doubutu.Wolf,NightManager.Doubutu.Deer,NightManager.Doubutu.Wolf,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Squirrel,
+       NightManager.Doubutu.Bear,NightManager.Doubutu.Deer,NightManager.Doubutu.Fox ,NightManager.Doubutu.Hare,NightManager.Doubutu.Wolf,NightManager.Doubutu.Wolf,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear,NightManager.Doubutu.Bear},
   };
   // ラインごとの参照テーブル
   int[,] IndexTable =
@@ -86,8 +97,25 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
   int[,] KaihiTable = //　回避値の増減テーブル
     {
         // 縦Doubutu 横Sakumotu/Trap
-        {50},
+        // 0:dmy 1-5:作物 6-10:トラップ feed/light/rope/tora/densaku   
+        {100,   80,55,50,10,30,     60,20,50,30,10     },  //bear
+        {100,   60,80,10,40,30,     60,20,30,50,10     },  //boar
+        {100,   60,10,80,40,30,     60,20,40,40,10     },  //deer
+        {100,   10,55,50,80,30,     60,20,60,60,10     },  //fox
+        {100,   70,55,50,40,30,     60,20,50,50,10     },  //hare
+        {100,   60,70,50,40,30,     60,20,35,55,10     },  //squirrel
+        {100,   60,55,70,40,30,     60,20,55,35,10     },  //wolf
 
+    };
+
+  int[] HarvestDays =   //収穫日数
+    {
+        9999,
+        1,
+        2,
+        2,
+        3,
+        4,
     };
   //        NightManager.instance.DeleteNightScene();
   // Use this for initialization
@@ -122,10 +150,10 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
     }
 
     // 敵生成　場所
-    void EnemyInstantiate(int EnemyId,int PosId, int TargetDist,bool Return,int SakumotuID)
+    void EnemyInstantiate(int EnemyId,int PosId, int TargetDist,bool Return,int SakumotuID,int TargetID)
     {
         GameObject obj = Instantiate(EnemyList[EnemyId], EnmeySpawnPoint[PosId].position, EnmeySpawnPoint[PosId].rotation);
-        obj.GetComponent<Enemy>().SetParam(TargetDist, SakumotuID,Return);
+        obj.GetComponent<Enemy>().SetParam(TargetDist, SakumotuID, TargetID, EnemyId,Return);
     }
 	
 	// Update is called once per frame
@@ -190,11 +218,12 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                         int EndIndex = 0;   // 消すタイミング
                         int SakumotuIndex = 0;    //TargetIndexをもとに昼のデータから中身を取得する
                         int TargetDist = 0;
+                        int TargetIndex = 0;
                         // インデックステーブルを参照して配列の中身を見る
                         for (TargetDist = 0; TargetDist < 5; TargetDist++)
                         {
-                            int TargetIndex = IndexTable[LineIndex,TargetDist];   // 参照する畑
-                            SakumotuIndex = 0;  // 畑の内容をここに保存
+                            TargetIndex = IndexTable[LineIndex,TargetDist];   // 参照する畑
+                            SakumotuIndex = FarmManager.Instance.typeNumber[TargetIndex];  // 畑の内容を取得
                             if (SakumotuIndex != 0)
                             {
                                 // 最寄りの作物・トラップがあれば回避率で抽選を行う
@@ -208,8 +237,9 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                         if (Kaihi == false)
                         {
                             bool UTurn = false;
-                            if (SakumotuIndex >= 5) UTurn = true;
-                            EnemyInstantiate((int)EnemyKind, LineIndex, 1 + TargetDist, UTurn,SakumotuIndex);
+                            if (SakumotuIndex <= 5) UTurn = true;   // １～５が野菜なので５以下なら戻す
+
+                            EnemyInstantiate((int)EnemyKind, LineIndex, 1 + TargetDist, UTurn, SakumotuIndex, TargetIndex);
                             break;
                         }
                         else
@@ -256,20 +286,111 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
         }
     }
 
+    // コルーチンの処理  
+
     // 昼に戻る処理
     private IEnumerator EndWaitStart()
     {
-        // コルーチンの処理  
+        foreach (Text text in ScoreTextArray)
+        {
+            text.text = "";
+        }
+        ScoreCanvas.SetActive(false);
+
         yield return new WaitForSeconds(2.0f);
         NightManager.instance.SetStatus(NightManager.NightStatus.End);  // ここで処理終了
     }
-    // 朝の結果発表開始時に呼び出し　モード切り替えとキー入力受付ウェイト
+    // 夜から朝になるときに呼び出し   結果発表開始　モード切り替えとキー入力受付ウェイト
     private IEnumerator MorningWait()
     {
-        // コルーチンの処理  
+        //まず最初に収穫処理
+
+
+        // ここで作物を削除してスコアを加算
+        for (int Lp = 0; Lp < FarmManager.Instance.typeNumber.Length; Lp++)
+        {
+            // 作物判定
+            if (FarmManager.Instance.typeNumber[Lp] >= 1 && FarmManager.Instance.typeNumber[Lp] <= 5)
+            {
+                // 作物ごとの収穫日数を耐えていれば収穫
+                if(FarmManager.Instance.dayCounts[Lp] >=HarvestDays[FarmManager.Instance.typeNumber[Lp]])
+                {
+                    FarmManager.Instance.Damage(Lp, 1);
+                    NightManager.instance.OneScore.AddOKSaku((NightManager.Sakumotu)FarmManager.Instance.typeNumber[Lp]);
+                }
+            }
+        }
+        // 合計値も加算
+        NightManager.instance.TotalScore.AddTotalScore(NightManager.instance.OneScore);
+        
+        
+        //ここから表示処理
+        NightManager.instance.OneScore.CalcScore();
+        ScoreCanvas.SetActive(true);
+        foreach(Text text in ScoreTextArray)
+        {
+            text.text = "";
+        }
+        // kekka
+        ScoreTextArray[0].text = "	今日の結果";
+        yield return new WaitForSeconds(1.0f);
+        // toubatu
+        ScoreTextArray[1].text = "撃退一覧\n"+
+            "熊ｘ" + NightManager.instance.OneScore.Dbt[0] + "＝" + NightManager.instance.OneScore.ScoreNum[0] + "Pt  " + "	猪ｘ" + NightManager.instance.OneScore.Dbt[1] + "＝" + NightManager.instance.OneScore.ScoreNum[1] + "Pt" + "	鹿ｘ"   + NightManager.instance.OneScore.Dbt[2] + "＝" + NightManager.instance.OneScore.ScoreNum[2] + "Pt\n" +
+            "狐ｘ" + NightManager.instance.OneScore.Dbt[3] + "＝" + NightManager.instance.OneScore.ScoreNum[3] + "Pt  " + "	兎ｘ" + NightManager.instance.OneScore.Dbt[4] + "＝" + NightManager.instance.OneScore.ScoreNum[4] + "Pt" + "	リスｘ" + NightManager.instance.OneScore.Dbt[5] + "＝" + NightManager.instance.OneScore.ScoreNum[5] + "Pt" + "	狼ｘ" + NightManager.instance.OneScore.Dbt[6] + "＝" + NightManager.instance.OneScore.ScoreNum[6] + "Pt\n";
+        yield return new WaitForSeconds(1.0f);
+        // NGyasai
+        ScoreTextArray[2].text = "	やられた野菜\n" +
+            "人参ｘ" + NightManager.instance.OneScore.NGSaku[0] + "＝" + NightManager.instance.OneScore.ScoreNum[7] + "Pt  " + "	茄子ｘ" + NightManager.instance.OneScore.NGSaku[1] + "＝" + NightManager.instance.OneScore.ScoreNum[8] + "Pt\n" +
+            "トマトｘ" + NightManager.instance.OneScore.NGSaku[2] + "＝" + NightManager.instance.OneScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.OneScore.NGSaku[3] + "＝" + NightManager.instance.OneScore.ScoreNum[10] + "Pt" + "    南瓜ｘ"+NightManager.instance.OneScore.NGSaku[4] + "＝" + NightManager.instance.OneScore.ScoreNum[11] + "Pt\n";
+        yield return new WaitForSeconds(1.0f);
+        // GetYasai
+        ScoreTextArray[2].text = "	収穫した野菜\n"+
+            "人参ｘ" + NightManager.instance.OneScore.OKSaku[0] + "＝" + NightManager.instance.OneScore.ScoreNum[7] + "Pt  " + "	茄子ｘ" + NightManager.instance.OneScore.OKSaku[1] + "＝" + NightManager.instance.OneScore.ScoreNum[8] + "Pt\n" +
+            "トマトｘ" + NightManager.instance.OneScore.OKSaku[2] + "＝" + NightManager.instance.OneScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.OneScore.OKSaku[3] + "＝" + NightManager.instance.OneScore.ScoreNum[10] + "Pt" + "    南瓜ｘ" + NightManager.instance.OneScore.OKSaku[4] + "＝" + NightManager.instance.OneScore.ScoreNum[11] + "Pt\n";
+        yield return new WaitForSeconds(1.0f);
+        // Score
+        ScoreTextArray[3].text = "	スコア　" + NightManager.instance.OneScore.ScoreNum[12] + "Pt";
+        yield return new WaitForSeconds(1.0f);
+        // Hitokoto
+//        ScoreTextArray[4].text = "	ひとこと：";
+        yield return new WaitForSeconds(1.0f);
+
+
+        if (LastDay)
+        {
+            //最終結果発表 
+            foreach (Text text in ScoreTextArray)
+            {
+                text.text = "";
+            }
+            // kekka
+            ScoreTextArray[0].text = "	最終結果";
+            yield return new WaitForSeconds(1.0f);
+            // toubatu
+            ScoreTextArray[1].text = "撃退一覧\n" +
+                "熊ｘ" + NightManager.instance.TotalScore.Dbt[0] + "＝" + NightManager.instance.TotalScore.ScoreNum[0] + "Pt  " + "	猪ｘ" + NightManager.instance.TotalScore.Dbt[1] + "＝" + NightManager.instance.TotalScore.ScoreNum[1] + "Pt" + "	鹿ｘ" + NightManager.instance.TotalScore.Dbt[2] + "＝" + NightManager.instance.TotalScore.ScoreNum[2] + "Pt\n" +
+                "狐ｘ" + NightManager.instance.TotalScore.Dbt[3] + "＝" + NightManager.instance.TotalScore.ScoreNum[3] + "Pt  " + "	兎ｘ" + NightManager.instance.TotalScore.Dbt[4] + "＝" + NightManager.instance.TotalScore.ScoreNum[4] + "Pt" + "	リスｘ" + NightManager.instance.TotalScore.Dbt[5] + "＝" + NightManager.instance.TotalScore.ScoreNum[5] + "Pt" + "	狼ｘ" + NightManager.instance.TotalScore.Dbt[6] + "＝" + NightManager.instance.TotalScore.ScoreNum[6] + "Pt\n";
+            yield return new WaitForSeconds(1.0f);
+            // NGyasai
+            ScoreTextArray[2].text = "	やられた野菜\n" +
+                "人参ｘ" + NightManager.instance.TotalScore.NGSaku[0] + "＝" + NightManager.instance.TotalScore.ScoreNum[7] + "Pt  " + "	茄子ｘ" + NightManager.instance.TotalScore.NGSaku[1] + "＝" + NightManager.instance.TotalScore.ScoreNum[8] + "Pt\n" +
+                "トマトｘ" + NightManager.instance.TotalScore.NGSaku[2] + "＝" + NightManager.instance.TotalScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.TotalScore.NGSaku[3] + "＝" + NightManager.instance.TotalScore.ScoreNum[10] + "Pt" + "    南瓜ｘ" + NightManager.instance.TotalScore.NGSaku[4] + "＝" + NightManager.instance.TotalScore.ScoreNum[11] + "Pt\n";
+            yield return new WaitForSeconds(1.0f);
+            // GetYasai
+            ScoreTextArray[2].text = "	収穫した野菜\n" +
+                "人参ｘ" + NightManager.instance.TotalScore.OKSaku[0] + "＝" + NightManager.instance.TotalScore.ScoreNum[7] + "Pt  " + "	茄子ｘ" + NightManager.instance.TotalScore.OKSaku[1] + "＝" + NightManager.instance.TotalScore.ScoreNum[8] + "Pt\n" +
+                "トマトｘ" + NightManager.instance.TotalScore.OKSaku[2] + "＝" + NightManager.instance.TotalScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.TotalScore.OKSaku[3] + "＝" + NightManager.instance.TotalScore.ScoreNum[10] + "Pt" + "    南瓜ｘ" + NightManager.instance.TotalScore.OKSaku[4] + "＝" + NightManager.instance.TotalScore.ScoreNum[11] + "Pt\n";
+            yield return new WaitForSeconds(1.0f);
+            // Score
+            ScoreTextArray[3].text = "	スコア　" + NightManager.instance.TotalScore.ScoreNum[12] + "Pt";
+            yield return new WaitForSeconds(1.0f);
+            // Hitokoto
+            //        ScoreTextArray[4].text = "	ひとこと：";
+            yield return new WaitForSeconds(1.0f);
+
+        }
         // ここで順番に結果発表
-        yield return new WaitForSeconds(3.0f);
         KeyInputWait = true;    // ここから受付開始
     }
-
 }

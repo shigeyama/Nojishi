@@ -376,7 +376,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u732A\u8A0E\u4F10\uFF58\n                  \u3000\u5339\r\n"
+  m_Text: 
 --- !u!222 &700939288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -611,9 +611,19 @@ MonoBehaviour:
   EnemyList:
   - {fileID: 1579069404727932, guid: aeb010fde98def540b4a8d58e2ad887e, type: 2}
   - {fileID: 1117902005495796, guid: 99a19d8b310a4d24d85d4937e1463bea, type: 2}
+  - {fileID: 1609667559144534, guid: c84ee956e4563d64b97870243e805135, type: 2}
+  - {fileID: 1926577506388452, guid: a8e21d910f577f045a32243a7d8f51ab, type: 2}
+  - {fileID: 1978048319002378, guid: 6649c25ed481b1443a368f21ab0819ac, type: 2}
+  - {fileID: 1988539053826528, guid: e97edb27f14cdc549ab16511c045e98a, type: 2}
   - {fileID: 1080548942436152, guid: 622e2792258092847a746aed33e71234, type: 2}
-  - {fileID: 1080548942436152, guid: 622e2792258092847a746aed33e71234, type: 2}
-  ScoreTextArray: []
+  ScoreTextArray:
+  - {fileID: 1428336193}
+  - {fileID: 2012439216}
+  - {fileID: 700939287}
+  - {fileID: 1285410529}
+  - {fileID: 1752781136}
+  - {fileID: 1324859667}
+  ScoreCanvas: {fileID: 0}
   NightMode: 0
   EndWait: 0
   DayTime_base: 30
@@ -773,7 +783,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u732A\u8A0E\u4F10\uFF58\n                  \u3000\u5339\r\n"
+  m_Text: 
 --- !u!222 &1285410530
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -876,7 +886,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u732A\u8A0E\u4F10\uFF58\n                  \u3000\u5339\r\n"
+  m_Text: 
 --- !u!222 &1324859668
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1141,7 +1151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u4ECA\u65E5\u306E\u7D50\u679C\r\n\n"
+  m_Text: 
 --- !u!222 &1428336194
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1300,7 +1310,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u732A\u8A0E\u4F10\uFF58\n                  \u3000\u5339\r\n"
+  m_Text: 
 --- !u!222 &1752781137
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1472,7 +1482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2011916659
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1564,7 +1574,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\t\u732A\u8A0E\u4F10\uFF58\n                  \u3000\u5339\r\n"
+  m_Text: 
 --- !u!222 &2012439217
 CanvasRenderer:
   m_ObjectHideFlags: 0

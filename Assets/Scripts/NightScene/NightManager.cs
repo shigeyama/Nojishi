@@ -5,12 +5,28 @@ using UnityEngine.SceneManagement;
 public class NightManager : MonoBehaviour {
     public enum Doubutu
     {
-        Inoshishi = 0,
+        Bear = 0,
+        Boar,
+        Deer,
+        Fox,
+        Hare,
+        Squirrel,
+        Wolf,
         Cnt
     };
     public enum Sakumotu
     {
-        Ninjin = 0,
+        None=0,
+        Carrot,
+        Eggplant,
+        Tomato,
+        Corn,
+        Pumpkin,
+        FeedTrap,
+        LightTrap,
+        RopeTrap,
+        TorabasamiTrap,
+        DensakuTrap,
         Cnt
     };
 
@@ -37,6 +53,7 @@ public class NightManager : MonoBehaviour {
         public int[] OKSaku = new int[(int)Sakumotu.Cnt];
         public int[] NGSaku = new int[(int)Sakumotu.Cnt];
 
+        public int[] ScoreNum = new int[(int)Doubutu.Cnt + (int)Sakumotu.Cnt + (int)Sakumotu.Cnt + 1]; //　個別のスコア計算結果　最後は全合計値
         // スコアリセット
         public void Reset()
         {
@@ -70,10 +87,47 @@ public class NightManager : MonoBehaviour {
         {
             NGSaku[(int)kind]++;
         }
+
+        int IntPow(int x, int pow)
+        {
+            int ret = 1;
+            while (pow != 0)
+            {
+                if ((pow & 1) == 1)
+                    ret *= x;
+                x *= x;
+                pow >>= 1;
+            }
+            return ret;
+        }
+        public void CalcScore()
+        {
+            int lp,ScoreLp=0;
+            ScoreNum[ScoreNum.Length - 1] = 0;
+            for (lp = 0; lp < Dbt.Length; lp++)
+            {
+                ScoreNum[ScoreLp] = Dbt[lp] * (100 + 50 * lp);
+                ScoreNum[ScoreNum.Length - 1] += ScoreNum[ScoreLp];
+                ScoreLp++;
+            }
+            for (lp = 0; lp < NGSaku.Length; lp++)
+            {
+                ScoreNum[ScoreLp] = NGSaku[lp] * -(IntPow(20, (lp + 1)));
+                ScoreNum[ScoreNum.Length - 1] += ScoreNum[ScoreLp];
+                ScoreLp++;
+            }
+            for (lp = 0; lp < OKSaku.Length; lp++)
+            {
+                ScoreNum[ScoreLp] = OKSaku[lp] * (IntPow(100, (lp + 1)));
+                ScoreNum[ScoreNum.Length - 1] += ScoreNum[ScoreLp];
+                ScoreLp++;
+            }
+
+        }
     }
 
-    Score TotalScore;   // 合計スコア
-    Score OneScore;     // １日スコア
+    public Score TotalScore;   // 合計スコア
+    public Score OneScore;     // １日スコア
     // メインシーンのライトとカメラ  これだけちょっと交換したいのでほしいです
     [SerializeField]
     Light MainLight;

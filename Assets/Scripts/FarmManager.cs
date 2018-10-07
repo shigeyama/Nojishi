@@ -11,6 +11,8 @@ public class FarmManager : SingletonMonoBehaviour<FarmManager>
 
     public int[] dayCounts;
 
+    public int[] growthDays;
+
     public void SetNumber()
     {
         for(int i = 0; i < groundTypeObject.Length; i++)
@@ -18,6 +20,8 @@ public class FarmManager : SingletonMonoBehaviour<FarmManager>
             typeNumber[i] = groundTypeObject[i].GetComponent<GroundType>().GroundTypeNum;
 
             dayCounts[i] = groundTypeObject[i].GetComponent<GroundType>().DayCount;
+
+            growthDays[i] = groundTypeObject[i].GetComponent<GroundType>().GrowthDay;
         }
     }
 

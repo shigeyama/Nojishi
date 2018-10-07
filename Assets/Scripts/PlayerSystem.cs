@@ -17,6 +17,8 @@ public class PlayerSystem : MonoBehaviour
 
     DATA data;
 
+    int powerPoint;
+
     // Use this for initialization
     void Start()
     {
