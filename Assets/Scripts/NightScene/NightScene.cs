@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class NightScene : MonoBehaviour, IPointerClickHandler{
+public class NightScene : MonoBehaviour{
 
     // メインシーンのライトとカメラ  これだけちょっと交換したいのでほしいです
     [SerializeField]
@@ -22,6 +22,8 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
     Text[] ScoreTextArray;
     [SerializeField]
     GameObject ScoreCanvas;
+    [SerializeField]
+    Button NextButton;
     
   public   bool NightMode; // 夜ならtrue 朝ならfalse
   public bool EndWait;
@@ -69,32 +71,32 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
   int[,] IndexTable =
   {
        // 左上縦～右
-       {20,21,22,23,24},
-       {15,16,17,18,19},
-       { 0, 1, 2, 3, 4},
-       { 5, 6, 7, 8, 9},
-       {10,11,12,13,14},
-       //左下縦～右
-       {24,23,22,24,20},
-       {19,18,17,16,15},
-       { 4, 3, 2, 1, 0},
-       { 9, 8, 7, 6, 5},
        {14,13,12,11,10},
+       { 9, 8, 7, 6, 5},
+       { 4, 3, 2, 1, 0},
+       {19,18,17,16,15},
+       {24,23,22,24,20},
+       //左下縦～右
+       {10,11,12,13,14},
+       { 5, 6, 7, 8, 9},
+       { 0, 1, 2, 3, 4},
+       {15,16,17,18,19},
+       {20,21,22,23,24},
        //左上横～下
-       {20,15, 0, 5,10},
-       {21,16, 1, 6,11},
-       {22,17, 2, 7,12},
-       {23,18, 3, 8,13},
-       {24,19, 4, 9,14},
-       //右下横～上
-       {10, 5, 0,15,20},
-       {11, 6, 1,16,21},
-       {12, 7, 2,17,22},
-       {13, 8, 3,18,23},
        {14, 9, 4,19,24},
+       {13, 8, 3,18,23},
+       {12, 7, 2,17,22},
+       {11, 6, 1,16,21},
+       {10, 5, 0,15,20},
+       //右下横～上
+       {24,19, 4, 9,14},
+       {23,18, 3, 8,13},
+       {22,17, 2, 7,12},
+       {21,16, 1, 6,11},
+       {20,15, 0, 5,10},
   };
 
-  int[,] KaihiTable = //　回避値の増減テーブル
+  int[,] KaihiTable = //　回避抽選値のテーブル
     {
         // 縦Doubutu 横Sakumotu/Trap
         // 0:dmy 1-5:作物 6-10:トラップ feed/light/rope/tora/densaku   
@@ -121,9 +123,12 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
   // Use this for initialization
 	void Start () {
         // 毎日生成から始まるのでここで各種初期化処理
+        FarmManager.Instance.SetNumber();
         NightMode = true;
-        DayTime = DayTime_base;
+        DayTime = 0;
         InitPtr = 0;
+        LastDay = false;
+        if (NightManager.instance.getDay() == 6) LastDay = true;
         /* //テストデータ
                 // 敵ID　生成位置　消える位置 Uターン
                 EnemyInstantiate(0, 0, 1,false);
@@ -147,6 +152,7 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                 EnemyInstantiate(3, 18, 4,false);
                 EnemyInstantiate(3, 19, 5,false);
          */
+//        Debug.Log("よるかいし");
     }
 
     // 敵生成　場所
@@ -162,9 +168,10 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
         if( NightMode)
         {
             // 敵進行中（昼～夜）
+        //    Debug.Log("よる");
 
             // 夜への表示変更
-            float step = Time.deltaTime * 20;
+            float step = Time.deltaTime * 10;
             SceneLight.transform.rotation = Quaternion.RotateTowards(SceneLight.transform.rotation, Quaternion.Euler(200, -30, 0), step); 
 
 
@@ -174,6 +181,7 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
             // 制限時間終了で切り替え
             if (DayTime >= DayTime_base)
             {
+//                Debug.Log("よるおわり");
                 // 昼夜処理を終了させて夜朝処理へ
                 EndWait = true;
                 NightMode = false;
@@ -202,6 +210,8 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
 
 	罠、敵の２元配列で回避抽選値・罠へのダメージを作成
 */
+//                Debug.Log("敵出現監視" + NightManager.instance.getDay()+" "+InitPtr+" "+enemyInitArray_Time[NightManager.instance.getDay(),InitPtr]);
+
                 if (enemyInitArray_Time[NightManager.instance.getDay(),InitPtr] <= DayTime)
                 {
                     // 出現時間を超えたので参照
@@ -212,8 +222,9 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                     {
                         int LineIndex = Random.Range(0, 20);
 
+//                        Debug.Log("ばんご"+EnemyKind);
                         // 回避抽選
-                        bool Kaihi=false;
+                        bool Kaihi=true;
                         int KaihiPer = 100;  // なにもなければ回避率１００％
                         int EndIndex = 0;   // 消すタイミング
                         int SakumotuIndex = 0;    //TargetIndexをもとに昼のデータから中身を取得する
@@ -223,6 +234,7 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                         for (TargetDist = 0; TargetDist < 5; TargetDist++)
                         {
                             TargetIndex = IndexTable[LineIndex,TargetDist];   // 参照する畑
+//                            Debug.Log("参照する畑" + TargetIndex + " 配列ながさ" + FarmManager.Instance.typeNumber.Length);
                             SakumotuIndex = FarmManager.Instance.typeNumber[TargetIndex];  // 畑の内容を取得
                             if (SakumotuIndex != 0)
                             {
@@ -231,13 +243,15 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                                 break;
                             }
                         }
+//                        Debug.Log("かいひかくりつ" + KaihiPer);
                         // 回避の成否で処理わけ
                         int KaihiRand = Random.Range(0, 100);
-                        if (KaihiRand <= KaihiPer) Kaihi = false;   // 乱数値が抽選値より小さければ回避失敗
+                        if (KaihiRand >= KaihiPer) Kaihi = false;   // 乱数値が抽選値より小さければ回避失敗
                         if (Kaihi == false)
                         {
                             bool UTurn = false;
                             if (SakumotuIndex <= 5) UTurn = true;   // １～５が野菜なので５以下なら戻す
+//                            Debug.Log("生成" + (int)EnemyKind + " " + LineIndex + " " + (1 + TargetDist) + " " + UTurn + " " + SakumotuIndex + " " + TargetIndex);
 
                             EnemyInstantiate((int)EnemyKind, LineIndex, 1 + TargetDist, UTurn, SakumotuIndex, TargetIndex);
                             break;
@@ -259,6 +273,7 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
             float step = Time.deltaTime * 20;
             if (EndWait)    // 朝待ち
             {
+
                 // 夜から朝 ここで結果発表
                 // ここに入る時点でMorningWaitコルーチンで３秒ウェイトに入るのでその間に空だけ変更　表示はコルーチン内
                 SceneLight.transform.rotation = Quaternion.RotateTowards(SceneLight.transform.rotation, Quaternion.Euler(10, -30, 0), step);
@@ -274,15 +289,27 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
 	}
 
 
-    public void OnPointerClick(PointerEventData data)
+    public void NextDay()
     {
         // 最後結果を戻すときだけクリック有効
         if( KeyInputWait)
         {
-            NightMode = false;  // このシーンの処理を全部終了して結果発表（朝）から昼になるまでの待機開始
-            EndWait = false;
-            KeyInputWait = false;
-            StartCoroutine("EndWaitStart");  
+            ScoreTextArray[6].text = "";
+            NextButton.gameObject.SetActive(false);
+
+            if (LastDay)
+            {
+                //最終表示したのでタイトルに戻る
+                NightManager.instance.FirstInit();
+                 UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleScene");
+            }
+            else
+            {
+                NightMode = false;  // このシーンの処理を全部終了して結果発表（朝）から昼になるまでの待機開始
+                EndWait = false;
+                KeyInputWait = false;
+                StartCoroutine("EndWaitStart");
+            }
         }
     }
 
@@ -313,7 +340,7 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
             if (FarmManager.Instance.typeNumber[Lp] >= 1 && FarmManager.Instance.typeNumber[Lp] <= 5)
             {
                 // 作物ごとの収穫日数を耐えていれば収穫
-                if(FarmManager.Instance.dayCounts[Lp] >=HarvestDays[FarmManager.Instance.typeNumber[Lp]])
+                if (FarmManager.Instance.dayCounts[Lp] >= FarmManager.Instance.growthDays[Lp])///]HarvestDays[FarmManager.Instance.typeNumber[Lp]])
                 {
                     FarmManager.Instance.Damage(Lp, 1);
                     NightManager.instance.OneScore.AddOKSaku((NightManager.Sakumotu)FarmManager.Instance.typeNumber[Lp]);
@@ -378,16 +405,23 @@ public class NightScene : MonoBehaviour, IPointerClickHandler{
                 "トマトｘ" + NightManager.instance.TotalScore.NGSaku[2] + "＝" + NightManager.instance.TotalScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.TotalScore.NGSaku[3] + "＝" + NightManager.instance.TotalScore.ScoreNum[10] + "Pt" + "    南瓜ｘ" + NightManager.instance.TotalScore.NGSaku[4] + "＝" + NightManager.instance.TotalScore.ScoreNum[11] + "Pt\n";
             yield return new WaitForSeconds(1.0f);
             // GetYasai
-            ScoreTextArray[2].text = "	収穫した野菜\n" +
+            ScoreTextArray[3].text = "	収穫した野菜\n" +
                 "人参ｘ" + NightManager.instance.TotalScore.OKSaku[0] + "＝" + NightManager.instance.TotalScore.ScoreNum[7] + "Pt  " + "	茄子ｘ" + NightManager.instance.TotalScore.OKSaku[1] + "＝" + NightManager.instance.TotalScore.ScoreNum[8] + "Pt\n" +
                 "トマトｘ" + NightManager.instance.TotalScore.OKSaku[2] + "＝" + NightManager.instance.TotalScore.ScoreNum[9] + "Pt  " + "	コーンｘ" + NightManager.instance.TotalScore.OKSaku[3] + "＝" + NightManager.instance.TotalScore.ScoreNum[10] + "Pt" + "    南瓜ｘ" + NightManager.instance.TotalScore.OKSaku[4] + "＝" + NightManager.instance.TotalScore.ScoreNum[11] + "Pt\n";
             yield return new WaitForSeconds(1.0f);
             // Score
-            ScoreTextArray[3].text = "	スコア　" + NightManager.instance.TotalScore.ScoreNum[12] + "Pt";
+            ScoreTextArray[4].text = "	スコア　" + NightManager.instance.TotalScore.ScoreNum[12] + "Pt";
             yield return new WaitForSeconds(1.0f);
             // Hitokoto
             //        ScoreTextArray[4].text = "	ひとこと：";
             yield return new WaitForSeconds(1.0f);
+            NextButton.gameObject.SetActive(true);
+            ScoreTextArray[6].text = "おわり";
+        }
+        else
+        {
+            NextButton.gameObject.SetActive(true);
+            ScoreTextArray[6].text = "翌日へ"; 
 
         }
         // ここで順番に結果発表

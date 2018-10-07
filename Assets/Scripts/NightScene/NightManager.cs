@@ -156,6 +156,7 @@ public class NightManager : MonoBehaviour {
     {
         TotalScore.Reset();
         OneScore.Reset();
+        Day = -1;
     }
 
     // シーン追加
@@ -163,6 +164,7 @@ public class NightManager : MonoBehaviour {
     {
         if (ExistScene == false)
         {
+            Day++;
             nowNightStatus = NightStatus.Exec;
             // メインシーンのカメラとライトをオフ
             ExistScene = true;
