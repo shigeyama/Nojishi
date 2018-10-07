@@ -63,6 +63,8 @@ public class DATA : MonoBehaviour
             return;
         }
 
+        playerSystem.UsePower(1);
+
         Debug.Log("Carrot");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 1;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
@@ -120,6 +122,7 @@ public class DATA : MonoBehaviour
         }
 
         playerSystem.UsePower(1);
+
         Debug.Log("Corn");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 4;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
@@ -139,6 +142,7 @@ public class DATA : MonoBehaviour
         }
 
         playerSystem.UsePower(1);
+
         Debug.Log("Pumpkin");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 5;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
