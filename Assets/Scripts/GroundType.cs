@@ -24,6 +24,10 @@ public class GroundType : MonoBehaviour
 
     int myNumber;
 
+    FarmManager farmManager;
+
+    DATA data;
+
     void Start()
     {
         for (int i = 0; i < transform.root.childCount; i++)
@@ -34,6 +38,10 @@ public class GroundType : MonoBehaviour
                 break;
             }
         }
+        farmManager = FindObjectOfType<FarmManager>();
+
+        data = FindObjectOfType<DATA>();
+
     }
 
     public bool IsFarm
@@ -54,13 +62,41 @@ public class GroundType : MonoBehaviour
             Destroy(item);
             isItem = false;
             GroundTypeNum = 0;
+            farmManager.typeNumber[myNumber] = 0;
         }
     }
 
-    void DayCounter()
+    public void DayCounter()
     {
-        dayCount++;
+        if (groundTypeNum > 0 && groundTypeNum < 6)
+        {
+            dayCount++;
+            if (dayCount >= growthDay)
+            {
+                Destroy(item);
+                switch (groundTypeNum)
+                {
+                    case 1:
+                        data.GrewCarrot();
+                        break;
+                    case 2:
+                        data.GrewEggplant();
+                        break;
+                    case 3:
+                        data.GrewTomato();
+                        break;
+                    case 4:
+                        data.GrewCorn();
+                        break;
+                    case 5:
+                        data.GrewPampkin();
+                        break;
+                }
+            }
+        }
     }
+
+
 
     public bool IsItem
     {

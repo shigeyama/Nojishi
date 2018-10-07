@@ -39,20 +39,49 @@ public class DATA : MonoBehaviour
     [SerializeField]
     GameObject densakuTrapPre;
 
+    //----------------------------------------------
+
+    [SerializeField]
+    GameObject grewCarrotPre;
+
+    [SerializeField]
+    GameObject grewEggplantPre;
+
+    [SerializeField]
+    GameObject grewTomatoPre;
+
+    [SerializeField]
+    GameObject grewCornPre;
+
+    [SerializeField]
+    GameObject grewPampkinPre;
 
     public void Carrot()
     {
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
         Debug.Log("Carrot");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 1;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
         playerSystem.SelectGround.GetComponent<GroundType>().GrowthDay = 1;
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(carrotPre, playerSystem.SelectGround.transform.position + new Vector3(0, 3, 0), Quaternion.Euler(0, 90, 25));
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
-        playerSystem.SelectGround.GetComponent<GroundType>().DayCount = 0;        playerSystem.DestroyButton();
+        playerSystem.SelectGround.GetComponent<GroundType>().DayCount = 0;
+        playerSystem.DestroyButton();
     }
 
     public void Eggplant()
     {
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(1);
+
         Debug.Log("Eggplant");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 2;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
@@ -65,6 +94,13 @@ public class DATA : MonoBehaviour
 
     public void Tomato()
     {
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(1);
+
         Debug.Log("Tomato");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 3;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
@@ -77,6 +113,13 @@ public class DATA : MonoBehaviour
 
     public void Corn()
     {
+
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(1);
         Debug.Log("Corn");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 4;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
@@ -89,6 +132,13 @@ public class DATA : MonoBehaviour
 
     public void Pampkin()
     {
+
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(1);
         Debug.Log("Pumpkin");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 5;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
@@ -101,6 +151,13 @@ public class DATA : MonoBehaviour
 
     public void FeedTrap()
     {
+        if (playerSystem.CheckPower() < 1)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(1);
+
         Debug.Log("FeedTrap");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 6;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 1;
@@ -111,6 +168,13 @@ public class DATA : MonoBehaviour
 
     public void LightTrap()
     {
+        if (playerSystem.CheckPower() < 2)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(2);
+
         Vector3 offsetRot = new Vector3(0, 0, 0);
         if (playerSystem.SelectGround.GetComponent<GroundType>().MyNumber == 0 ||
             playerSystem.SelectGround.GetComponent<GroundType>().MyNumber == 1 ||
@@ -171,6 +235,13 @@ public class DATA : MonoBehaviour
 
     public void RopeTrap()
     {
+        if (playerSystem.CheckPower() < 2)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(2);
+
         Debug.Log("RopeTrap");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 8;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 2;
@@ -181,6 +252,13 @@ public class DATA : MonoBehaviour
 
     public void TorabasamiTrap()
     {
+        if (playerSystem.CheckPower() < 3)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(3);
+
         Debug.Log("TorabasamiTrap");
         playerSystem.SelectGround.GetComponent<GroundType>().GroundTypeNum = 9;
         playerSystem.SelectGround.GetComponent<GroundType>().Hp = 3;
@@ -191,6 +269,13 @@ public class DATA : MonoBehaviour
 
     public void DensakuTrap()
     {
+        if (playerSystem.CheckPower() < 4)
+        {
+            return;
+        }
+
+        playerSystem.UsePower(4);
+
         Vector3 offsetRot = new Vector3(0, 0, 0);
         if (playerSystem.SelectGround.GetComponent<GroundType>().MyNumber == 0 ||
             playerSystem.SelectGround.GetComponent<GroundType>().MyNumber == 1 ||
@@ -247,5 +332,30 @@ public class DATA : MonoBehaviour
         playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(densakuTrapPre, playerSystem.SelectGround.transform.position, Quaternion.Euler(offsetRot));
         playerSystem.SelectGround.GetComponent<GroundType>().IsItem = true;
         playerSystem.DestroyButton();
+    }
+
+    public void GrewCarrot()
+    {
+        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewCarrotPre, playerSystem.SelectGround.transform.position + new Vector3(0, 3, 0), Quaternion.Euler(0, 90, 25));
+    }
+
+    public void GrewEggplant()
+    {
+        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewEggplantPre, playerSystem.SelectGround.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
+    }
+
+    public void GrewTomato()
+    {
+        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewTomatoPre, playerSystem.SelectGround.transform.position + new Vector3(-2.5f, 0, 0), Quaternion.Euler(0, 90, 25));
+    }
+
+    public void GrewCorn()
+    {
+        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewCornPre, playerSystem.SelectGround.transform.position + new Vector3(-1, 0, 0), Quaternion.Euler(0, 90, 25));
+    }
+
+    public void GrewPampkin()
+    {
+        playerSystem.SelectGround.GetComponent<GroundType>().Item = Instantiate(grewPampkinPre, playerSystem.SelectGround.transform.position + new Vector3(0, 0, 0), Quaternion.Euler(30, 0, 0));
     }
 }

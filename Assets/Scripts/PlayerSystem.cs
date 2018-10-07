@@ -10,6 +10,9 @@ public class PlayerSystem : MonoBehaviour
     [SerializeField]
     GameObject farmButtonPrefab;
 
+    [SerializeField]
+    Slider slider;
+
     GameObject trapButton;
     GameObject farmButton;
 
@@ -23,6 +26,8 @@ public class PlayerSystem : MonoBehaviour
     void Start()
     {
         data = FindObjectOfType<DATA>();
+        powerPoint = 10;
+        slider.value = (float)powerPoint / 10;
     }
 
     // Update is called once per frame
@@ -95,6 +100,23 @@ public class PlayerSystem : MonoBehaviour
     {
         Destroy(trapButton);
         Destroy(farmButton);
+    }
+
+    public int CheckPower()
+    {
+        return powerPoint;
+    }
+
+    public void UsePower(int useValue)
+    {
+        powerPoint -= useValue;
+        slider.value = (float)powerPoint / 10;
+    }
+
+    public void PowerReset()
+    {
+        powerPoint = 10;
+        slider.value = (float)powerPoint / 10;
     }
     
 }

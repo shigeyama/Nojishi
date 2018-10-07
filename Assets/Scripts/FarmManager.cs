@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FarmManager : SingletonMonoBehaviour<FarmManager>
 {
+    [SerializeField]
+    PlayerSystem playerSystem;
+
     [SerializeField, Header("シーン上の畑を持ってくる")]
     GameObject[] groundTypeObject;
 
@@ -13,9 +16,17 @@ public class FarmManager : SingletonMonoBehaviour<FarmManager>
 
     public int[] growthDays;
 
+    bool dayCheck = true;
+
     public void SetNumber()
     {
-        for(int i = 0; i < groundTypeObject.Length; i++)
+        dayCheck = false;
+
+        typeNumber = new int[groundTypeObject.Length];
+        dayCounts = new int[groundTypeObject.Length];
+        growthDays = new int[groundTypeObject.Length];
+
+        for (int i = 0; i < groundTypeObject.Length; i++)
         {
             typeNumber[i] = groundTypeObject[i].GetComponent<GroundType>().GroundTypeNum;
 
@@ -28,5 +39,17 @@ public class FarmManager : SingletonMonoBehaviour<FarmManager>
     public void Damage(int typeNum, int damage)
     {
         groundTypeObject[typeNum].GetComponent<GroundType>().AnimalDamage(damage);
+    }
+
+    void Update()
+    {
+        if (!dayCheck && NightManager.instance.CheckStatus() == NightManager.NightStatus.End)
+        {
+            for (int i = 0; i < groundTypeObject.Length; i++)
+            {
+                groundTypeObject[i].GetComponent<GroundType>().DayCounter();
+            }
+            playerSystem.PowerReset();
+        }
     }
 }
