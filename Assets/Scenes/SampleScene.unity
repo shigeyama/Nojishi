@@ -1978,6 +1978,7 @@ MonoBehaviour:
   - {fileID: 1831160274}
   typeNumber: 
   dayCounts: 
+  growthDays: 
 --- !u!4 &1592469870
 Transform:
   m_ObjectHideFlags: 0
@@ -2173,6 +2174,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1535750972692686, guid: bb7be666040b4194ca1d1bdb9cffdc85,
     type: 2}
   m_PrefabInternal: {fileID: 2111786175}
+--- !u!1 &1820512448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820512449}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820512449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820512448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831160274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1535750972692686, guid: bb7be666040b4194ca1d1bdb9cffdc85,
@@ -2357,9 +2386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd92fc9304995a446a1b36348cf2a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapButtonPrefab: {fileID: 1253891669457818, guid: bca4928ccb81cb54d97242f7adcfc541,
+  trapButtonPrefab: {fileID: 1031541878891550, guid: 631c44cc52fb9ba489fec9e46fc0b54b,
     type: 2}
-  farmButtonPrefab: {fileID: 1208522065205478, guid: 17c7f90b0d7563d4d9b9cde825a67898,
+  farmButtonPrefab: {fileID: 1808475609108348, guid: f785543edcb4692408d10e2c49d3cb0b,
     type: 2}
 --- !u!4 &1904031618
 Transform:
